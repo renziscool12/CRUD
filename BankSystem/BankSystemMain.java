@@ -1,6 +1,8 @@
 package practice;
 import java.util.*; // *; so we can access all library on java util
 import java.lang.IllegalArgumentException; //added illegal argument exception so we can throw errors professionally
+import java.time.LocalDate; //date time
+import java.time.format.DateTimeFormatter; //can format time
 public class BankSystemSimulation {
 
 	public static void main(String[] args) {
@@ -21,8 +23,30 @@ public class BankSystemSimulation {
 				switch(key) {
 				//case 1 we create our account
 				case "1":
-					System.out.print("Account Name: ");
+					System.out.print("Owner Name: ");
 					String name = sc.nextLine().trim(); //added trim so if you put space it will cut it
+					
+					System.out.print("Email: ");
+					String email = sc.nextLine().trim();
+					
+					System.out.print("Phone Number: ");
+					String phoneNumber = sc.nextLine().trim();
+					
+					System.out.print("Address: ");
+					String address = sc.nextLine().trim();
+					
+					String dob;
+					while(true) {
+						try {
+							System.out.print("Date of Birth (dd/mm/yyyy): ");
+							dob = sc.nextLine().trim();
+							DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+							LocalDate.parse(dob, formatter);
+							break;
+						}catch(Exception e) {
+							System.out.println("Invalid Date Format! Use DD/MM/YYYY only!");
+						}
+					}
 					
 					double balance = 0; // balance will always start at 0
 					while(true) { //while so it can repeat if you put wrong input
@@ -71,14 +95,14 @@ public class BankSystemSimulation {
 							
 						}catch(NumberFormatException e) {
 							System.out.println("Numbers only please");
-						}catch(IllegalArgumentException e) {
-							System.out.println("Error: " + e.getMessage());
 						}
 					}
 					
+					//owner class
+					Owner owner = new Owner(name, email, phoneNumber, address, dob);
 					//Created new bank account 
 					//added the name, balance and type we choose
-					BankSystem addAcc = new BankSystem(name, balance, type);
+					BankSystem addAcc = new BankSystem(owner, balance, type);
 					bank.add(addAcc);
 					//unique id when creating new account
 					System.out.println("Account Created! Your unique ID is: " + addAcc.getAccountID());
