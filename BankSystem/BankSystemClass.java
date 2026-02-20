@@ -11,8 +11,8 @@ public class BankSystem {
 		Savings, // saving account
 		Checking // checking account
 	}
-	 // Fields for the account
-	private 	String accountName;  // account holder's name can be changed
+	// Fields for the account
+	private Owner owner;  // account holder's name can be changed
 	private double balance;  // current balance updated via deposit/withdraw
 	// Universally Unique Identifier
 	private final UUID accountID; // unique account ID cannot be changed
@@ -20,8 +20,8 @@ public class BankSystem {
     
 	
 	// Constructor for creating a account
-	public BankSystem(String accountName, double balance, AccountType accountType) {
-		this.accountName = accountName; // Set Account Name
+	public BankSystem(Owner owner, double balance, AccountType accountType) {
+		this.owner = owner; // Set Owner
 		this.balance = balance;
 		this.accountID = UUID.randomUUID(); // guaranteed random new IDs
 		this.accountType = accountType;
@@ -48,28 +48,21 @@ public class BankSystem {
 		}
 	}
 	
-	// optional to change if i want to
-	public void setAccountName(String name) {
-		if(name != null && !name.isEmpty()) {
-			this.accountName = name;	
-		}
-	}
-	
 	// getter
 	public double getBalance() { return balance; }
-	public String getAccountName() { return accountName; }
+	public Owner getOwner() { return owner; }
 	public UUID getAccountID() { return accountID; }
 	public AccountType getAccountType() {return accountType; }
 	
 	// override
 	// added ToString to accountID so it can override
 	public String toString() {
-		return "ID: " + accountID.toString() + " | " + accountName + " | " + accountType + " | Balance: $" + String.format("%.2f", balance);
+		return "ID: " + accountID.toString() + " | " + owner + " | " + accountType + " | Balance: $" + String.format("%.2f", balance);
 	}
 	
 	// menu
 	public static void Menu() {
-			System.out.println("\n====================");
+			System.out.println("====================");
 		    System.out.println("      LAND BANK    ");
 		    System.out.println("====================");
 		    System.out.println("[1] Add Account");
@@ -80,6 +73,5 @@ public class BankSystem {
 		    System.out.println("[0] Exit");
 		    System.out.println();
 		    System.out.print("Choose your number: ");
-	}
-	
+	}	
 }
